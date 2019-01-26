@@ -37,10 +37,10 @@ num_forecast_periods <- NA
 wait_time <- 60
 GLMversion <- "GLM_3.0.0beta10"
 DOWNSCALE_MET <- TRUE
-FLAREversion <- "v1.0_beta.1"
+FLAREversion <- "v1.0_beta.1.01"
 
 
-sim_name <- "test" 
+sim_name <- "FCRv1.beta2" 
 start_day <- "2018-07-10 00:00:00" #GMT
 forecast_start_day <-"2019-01-24 00:00:00" #GMT 
 
