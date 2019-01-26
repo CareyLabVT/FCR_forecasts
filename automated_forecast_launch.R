@@ -34,7 +34,7 @@ forecast_days <- 16
 include_wq <- FALSE
 use_ctd <- FALSE
 num_forecast_periods <- NA
-wait_time <- 60
+wait_time <- 60*10
 GLMversion <- "GLM_3.0.0beta10"
 DOWNSCALE_MET <- TRUE
 FLAREversion <- "v1.0_beta.1.01"
