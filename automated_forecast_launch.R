@@ -19,9 +19,12 @@ library(tidyr)
 library(dplyr)
 library(ggplot2)
 
-folder <- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
-forecast_location <- "/Users/quinn/Dropbox/Research/SSC_forecasting/FCR_forecasts/" 
-data_location <- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/" 
+#folder <- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
+#forecast_location <- "/Users/quinn/Dropbox/Research/SSC_forecasting/FCR_forecasts/" 
+#data_location <- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/" 
+folder <- '/home/scc/forecast/FLARE'
+forecast_location <- '/home/scc/forecast/FCR_forecasts/v1.beta2'
+data_location <- '/home/scc/forecast/SCC_data'
 
 restart_file <- NA
 spin_up_days <- 0
