@@ -44,8 +44,8 @@ FLAREversion <- "v1.0_beta.1.01"
 
 
 sim_name <- "FCRv1.beta2" 
-start_day <- "2018-07-10 00:00:00" #GMT
-forecast_start_day <-"2019-01-24 00:00:00" #GMT 
+start_day <- "2019-02-05 00:00:00" #GMT
+forecast_start_day <-"2019-02-06 00:00:00" #GMT 
 
 source(paste0(folder, "/", "Rscripts/run_enkf_forecast.R"))
 source(paste0(folder, "/", "Rscripts/evaluate_forecast.R"))
