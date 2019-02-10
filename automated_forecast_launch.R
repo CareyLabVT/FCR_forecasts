@@ -26,7 +26,7 @@ folder <- '/home/scc/forecast/FLARE'
 forecast_location <- '/home/scc/forecast/FCR_forecasts/v1.beta2'
 data_location <- '/home/scc/forecast/SCC_data'
 
-restart_file <- NA
+restart_file <- paste0(forecast_location,"/FCRv1.beta2_H_2019131_201921_F_16_201924_2_2.nc")
 spin_up_days <- 0
 push_to_git <- TRUE
 pull_from_git <- TRUE
@@ -44,8 +44,8 @@ FLAREversion <- "v1.0_beta.1.01"
 
 
 sim_name <- "FCRv1.beta2" 
-start_day <- "2019-02-05 00:00:00" #GMT
-forecast_start_day <-"2019-02-06 00:00:00" #GMT 
+start_day <- "2019-02-01 00:00:00" #GMT
+forecast_start_day <-"2019-02-02 00:00:00" #GMT 
 
 source(paste0(folder, "/", "Rscripts/run_enkf_forecast.R"))
 source(paste0(folder, "/", "Rscripts/evaluate_forecast.R"))
