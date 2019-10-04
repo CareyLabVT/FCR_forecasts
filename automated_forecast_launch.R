@@ -18,7 +18,7 @@ library(tools)
 #VAHID CHANGE THESE THREE
 data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
 code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
-forecast_location <<- "/Users/quinn/Downloads/temp_glm/v2.glm/"
+forecast_location <<- "/Users/quinn/Downloads/temp_glm/v2.glm_aed/"
 
 source(paste0(forecast_location,"/","configure_FLARE.R"))
 source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
