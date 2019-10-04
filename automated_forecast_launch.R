@@ -24,8 +24,12 @@ source(paste0(forecast_location,"/","configure_FLARE.R"))
 source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
 source(paste0(code_folder, "/", "Rscripts/plot_forecast.R"))
 
+#If it crashed all you need to modify is the following two lines
+start_day_local <- "2019-09-01"  #This should be the second date in the start file name
+restart_file <- NA
+
+
 sim_name <- "GLM_AED_v2"
-start_day_local <- "2019-09-01" #Note: 2018-07-16 is the first day with CTD observations for initial conditions  2018-05-04 2015-07-09
 start_time_local <- "07:00:00"
 forecast_start_day_local <- "2019-09-25" 
 spin_up_days <- 0
@@ -33,7 +37,7 @@ days_between_forecasts <- 1
 forecast_days <- 16 #16
 num_forecast_periods <- 1000
 wait_time <- 60*60
-restart_file <- NA
+
 
 start_day_local <- as.POSIXct(start_day_local, format = "%Y-%m-%d")
 forecast_start_day_local <- as.POSIXct(forecast_start_day_local, format = "%Y-%m-%d")
