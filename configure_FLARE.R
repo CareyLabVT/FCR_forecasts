@@ -61,8 +61,8 @@ missing_met_data_threshold <<- 2
 # Run information
 #############################
 
-GLMversion <<- "GLM 3.0.0beta10"
-FLAREversion <<- "v1.0_beta.1"
+GLMversion <<- "GLM 3.0.5"
+FLAREversion <<- "c588aff"
 #GLM and FLARE version; the code adds these to the output files
 
 #GLM NML used as base 
