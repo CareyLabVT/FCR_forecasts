@@ -605,8 +605,8 @@ PHY_AGGREGATE_init_error <<- 3
 
 #Pull data from github?
 #Push results to github?
-pull_from_git <<- FALSE
-push_to_git <<- FALSE
+pull_from_git <<- TRUE
+push_to_git <<- TRUE
 
 #########################################
 # Plotting related options
