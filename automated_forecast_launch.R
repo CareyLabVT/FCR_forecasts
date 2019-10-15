@@ -16,9 +16,12 @@ library(tidyverse)
 library(tools)
 
 #VAHID CHANGE THESE THREE
-data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
-code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
-forecast_location <<- "/Users/quinn/Downloads/temp_glm/v2.glm/"
+#data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
+#code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
+#forecast_location <<- "/Users/quinn/Downloads/temp_glm/v2.glm/"
+data_location <<- '/home/scc/forecast/SCC_data'
+code_folder <<- '/home/scc/forecast/FLARE'
+forecast_location <<- '/home/scc/forecast/FCR_forecasts/v2.glm'
 
 source(paste0(forecast_location,"/","configure_FLARE.R"))
 source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
