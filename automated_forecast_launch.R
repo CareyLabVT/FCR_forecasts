@@ -28,8 +28,8 @@ source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
 source(paste0(code_folder, "/", "Rscripts/plot_forecast.R"))
 
 #If it crashed all you need to modify is the following two lines
-start_day_local <- "2019-09-01"  #This should be the second date in the start file name
-restart_file <- NA
+start_day_local <- "2019-09-26"  #This should be the second date in the start file name
+restart_file <- paste0(forecast_location, "/GLM_v2_H_2019_09_25_2019_09_26_F_16_10162019_10_7.nc")
 
 
 sim_name <- "GLM_v2"
