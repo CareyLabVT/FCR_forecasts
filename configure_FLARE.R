@@ -453,7 +453,7 @@ temp_obs_fname <<- c(paste0(data_location,"/mia-data/Catwalk.csv"),paste0(data_l
 #name of catwalk file name
 #Catwalk has the temperature string, fdom, chla, and do sensors
 
-met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"),paste0(data_location, "/extra_files/Met_final_2015_2018.csv"))
+met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"),paste0(data_location, "/manual-data/Met_final_2015_2018.csv"))
 #met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"))
 #Name of meteorology file name
 
