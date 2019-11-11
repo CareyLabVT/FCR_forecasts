@@ -683,7 +683,7 @@ push_to_git <<- TRUE
 # Depths (meters) that the water quality variables are plotted
 focal_depths_wq <<- c(2,5,9)
 #Depths that are plotted for the manager plot
-focal_depths_manager <<- (4,16,25) #c(4,16,25)
+focal_depths_manager <<- c(4,16,25) #c(4,16,25)
 #Indexes for the depths that are compared to calculate turnover
 turnover_index_1 <<- 4
 turnover_index_2 <<- 25
