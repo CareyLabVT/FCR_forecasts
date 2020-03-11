@@ -2,8 +2,8 @@
 # Lake information
 ###########################
 
-lake_name <<- "FCR"
-lake_latitude <<- 37.307   #Degrees North 
+lake_name <<- "FCRE"
+lake_latitude <<- 37.307   #Degrees North
 lake_longitude <<- 79.837  #Degrees West
 
 #Time zone that GLM is run in
@@ -17,6 +17,8 @@ local_tzone <<- "EST"
 #########################################
 include_wq <<- FALSE
 #TRUE = use AED
+
+use_null_model <<- FALSE
 
 ##########################
 # Management Options
@@ -48,6 +50,8 @@ DOWNSCALE_MET <<- TRUE
 #Downscale the coarse resolutoin NOAA data to the local
 #site using the meterology station at the lake
 
+noaa_location <<- paste0(data_location, "/fcre/")
+
 downscaling_coeff <<- paste0(data_location, "/manual-data/debiased.coefficients.2018_07_12_2019_07_11.RData")
 
 #file name of previous downscaling coefficients
@@ -59,7 +63,7 @@ met_ds_obs_end <<- as.Date("2019-07-11")
 
 missing_met_data_threshold <<- 100
 
-use_future_inflow <<- TRUE
+use_future_inflow <<- FALSE
 
 ############################
 # Run information
@@ -69,18 +73,10 @@ GLMversion <<- "GLM 3.0.0beta10"
 FLAREversion <<- "v1.0_beta.1"
 #GLM and FLARE version; the code adds these to the output files
 
-#GLM NML used as base 
+base_GLM_nml <- paste0(forecast_location,"/glm3_woAED.nml" )
 if(include_wq){
-  if(simulate_SSS){
-    base_GLM_nml <<- "glm3_wAED_SSS.nml"
-  }else{
-    base_GLM_nml <<- "glm3_wAED.nml"  
-  }
-}else{
-  #base_GLM_nml <<- "glm3_woAED.nml"
-  base_GLM_nml <<- "glm3_woAED_constant_sedtemp.nml"
+  base_AED_nml <<- paste0(forecast_location,"/aed2_only_Oxy.nml")
 }
-
 #################################
 ### Uncertainty simulated
 ################################
@@ -108,57 +104,10 @@ single_run <<- FALSE
 #Init depth of lake
 lake_depth_init <<- 9.4  #not a modeled state
 
-if(!include_wq){
-  modeled_depths <<- c(0.1, 0.33, 0.66, 
-                       1.00, 1.33, 1.66,
-                       2.00, 2.33, 2.66,
-                       3.0, 3.33, 3.66,
-                       4.0, 4.33, 4.66,
-                       5.0, 5.33, 5.66,
-                       6.0, 6.33, 6.66,
-                       7.00, 7.33, 7.66,
-                       8.0, 8.33, 8.66,
-                       9.00)
-  
-  #modeled_depths <<- c(0.1, 0.5, 
-  #                     1.00, 1.5,
-  #                     2.00, 2.5,
-  #                     3.0, 3.5,
-  #                     4.0, 4.5,
-  #                     5.0, 5.5,
-  #                     6.0, 6.5,
-  #                     7.00, 7.5,
-  #                     8.0, 8.5,
-  #                     9.00)
-  
-  
-  #modeled_depths <<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9) 
-}else{
-  modeled_depths <<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9) 
-  #modeled_depths <<- c(0.1, 0.5, 
-  #                     1, 2.5, 
-  #                     2, 2.5, 
-  #                     3, 3.5,
-  #                     4, 4.5, 
-  #                     5, 5.5, 
-  #                     6, 6.5, 
-  #                     7, 7.5,
-  #                     8, 8.5, 
-  #                     9) 
-  #modeled_depths <<- c(0.1, 0.33, 0.66, 
-  #                     1.00, 1.33, 1.66,
-  #                     2.00, 2.33, 2.66,
-  #                     3.0, 3.33, 3.66,
-  #                     4.0, 4.33, 4.66,
-  #                     5.0, 5.33, 5.66,
-  #                     6.0, 6.33, 6.66,
-  #                     7.00, 7.33, 7.66,
-  #                     8.0, 8.33, 8.66,
-  #                     9.00)
-}
+modeled_depths <<- c(0.1, seq(0.5, 9, 0.5))
 
 default_temp_init <<- c(6.2, 5.7, 5.5, 5.5, 5.4, 5.3, 5.3, 5.3, 5.2, 5.0)
-default_temp_init_depths <<-  c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9) 
+default_temp_init_depths <<-  c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 the_sals_init <<- 0.0
 
 default_snow_thickness_init <<- 0.0
@@ -169,9 +118,9 @@ default_blue_ice_thickness_init <<- 0.0
 ##  Ensemble members used
 ##############################
 n_enkf_members <<- 1
-n_ds_members <<- 21
-n_inflow_outflow_members <<- 21
-#Note: this number is multiplied by 
+n_ds_members <<- 5
+n_inflow_outflow_members <<- 1
+#Note: this number is multiplied by
 # 1) the number of NOAA ensembles (21)
 # 2) the number of downscaling essembles (50 is current)
 # get to the total number of essembles
@@ -179,8 +128,13 @@ n_inflow_outflow_members <<- 21
 ################################
 ### Process uncertainty adaption
 ##################################
-qt_alpha <<- 0.7  #0 - all weight on the new Qt, 1 - all weight on the current Qt
-qt_beta <<- 0.8 # 
+qt_alpha <<- 0.8  #0 - all weight on the new Qt, 1 - all weight on the current Qt
+qt_beta <<- 0.7 #
+localization_distance <<- 1 #distance in meters were covariances in the process error are used
+use_cov <<- TRUE
+adapt_qt_method <<- 1  #0 = no adapt, 1 = variance in residuals, 2 = Rastetter et al 2011
+num_adapt_days <<- 15
+
 
 #################################
 # Parameter calibration information
@@ -190,7 +144,7 @@ include_pars_in_qt_update <<- TRUE
 #Adapt the parameter noise
 
 #Initial zone temperatures and the upper and lower bounds
-#Zone 1 is Xm to Xm 
+#Zone 1 is Xm to Xm
 #Zone 2 is Xm to Xm
 zone1_temp_init_mean <<- 12
 zone1_temp_init_lowerbound <<- 10
@@ -198,32 +152,41 @@ zone1_temp_init_upperbound <<- 20
 zone1_temp_lowerbound <<- -100
 zone1_temp_upperbound <<- 100
 #daily perturbance of parameter value
-zone1temp_init_qt <<- 1^2  #THIS IS THE VARIANCE, NOT THE SD
+zone1temp_init_qt <<- 0.01^2  #THIS IS THE VARIANCE, NOT THE SD
 
 zone2_temp_init_mean <<- 15
 zone2_temp_init_lowerbound <<-  10
 zone2_temp_init_upperbound <<-  20
 zone2_temp_lowerbound <<-  -100
 zone2_temp_upperbound <<-  100
-zone2temp_init_qt <<- 1^2 #THIS IS THE VARIANCE, NOT THE SD
+zone2temp_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
 
 #Shortwave factor
 swf_init_mean <<- 1.0
 swf_init_lowerbound <<- 0.5
-swf_init_upperbound <<- 2.0
+swf_init_upperbound <<- 1.5
 swf_lowerbound <<- -10
 swf_upperbound <<- 10
 #daily perturbance of parameter value
-swf_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
+swf_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
 
 #Longwave factor
 lwf_init_mean <<- 1.0
 lwf_init_lowerbound <<- 0.5
-lwf_init_upperbound <<- 2.0
+lwf_init_upperbound <<- 1.5
 lwf_lowerbound <<- -10
 lwf_upperbound <<- 10
 #daily perturbance of parameter value
-lwf_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
+lwf_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
+
+#Inflow factor
+inflow_factor_init_mean <<- 0.5
+inflow_factor_init_lowerbound <<- 0.0
+inflow_factor_init_upperbound <<- 1.0
+inflow_factor_lowerbound <<- 0.0
+inflow_factor_upperbound <<- 1.0
+#daily perturbance of parameter value
+inflow_factor_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
 
 #Fsed_oxy
 Fsed_oxy_init_mean <<- -20
@@ -310,7 +273,7 @@ Fsed_doc_init_qt <<- 0.1^2 #THIS IS THE VARIANCE, NOT THE SD
 if(include_wq){
   par_names <<- c(
     "sed_temp_mean"
-    #,"sed_temp_mean"
+    ,"sed_temp_mean"
     ,"sw_factor"
     ,"lw_factor"
     #,"Fsed_oxy"
@@ -324,7 +287,7 @@ if(include_wq){
   )
   par_names_save <<- c(
     "zone1temp"
-    #,"zone2temp"
+    ,"zone2temp"
     ,"sw_factor"
     ,"lw_factor"
     #,"Fsed_oxy"
@@ -338,7 +301,7 @@ if(include_wq){
   )
   par_nml <<- c(
     "glm3.nml"
-    #,"glm3.nml"
+    ,"glm3.nml"
     ,"glm3.nml"
     ,"glm3.nml"
     #,"aed2.nml"
@@ -349,10 +312,10 @@ if(include_wq){
     #, "aed2.nml"
     #, "aed2.nml"
     #, "aed2.nml"
-  ) 
+  )
   par_init_mean <<- c(
     zone1_temp_init_mean
-    #,zone2_temp_init_mean
+    ,zone2_temp_init_mean
     ,swf_init_mean
     ,lwf_init_mean
     #,Fsed_oxy_init_mean
@@ -366,7 +329,7 @@ if(include_wq){
   )
   par_init_lowerbound <<- c(
     zone1_temp_init_lowerbound
-    #,zone2_temp_init_lowerbound
+    ,zone2_temp_init_lowerbound
     ,swf_init_lowerbound
     ,lwf_init_lowerbound
     #,Fsed_oxy_init_lowerbound
@@ -380,12 +343,12 @@ if(include_wq){
   )
   par_init_upperbound <<- c(
     zone1_temp_init_upperbound
-    #,zone2_temp_init_upperbound
+    ,zone2_temp_init_upperbound
     ,swf_init_upperbound
     ,lwf_init_upperbound
     #,Fsed_oxy_init_upperbound
     #,R_growth_init_upperbound
-    #,Rnitrif_init_upperbound 
+    #,Rnitrif_init_upperbound
     #,Fsed_frp_init_upperbound
     #,Rdom_minerl_init_upperbound
     #,Fsed_nit_init_upperbound
@@ -394,7 +357,7 @@ if(include_wq){
   )
   par_lowerbound <<- c(
     zone1_temp_lowerbound
-    #,zone2_temp_lowerbound 
+    ,zone2_temp_lowerbound
     ,swf_lowerbound
     ,lwf_lowerbound
     #,Fsed_oxy_lowerbound
@@ -402,13 +365,13 @@ if(include_wq){
     #,Rnitrif_lowerbound
     #,Fsed_frp_lowerbound
     #,Rdom_minerl_lowerbound
-    #,Fsed_nit_lowerbound 
-    #,Fsed_amm_lowerbound 
+    #,Fsed_nit_lowerbound
+    #,Fsed_amm_lowerbound
     #,Fsed_doc_lowerbound
   )
   par_upperbound <<- c(
     zone1_temp_upperbound
-    #,zone2_temp_upperbound
+    ,zone2_temp_upperbound
     ,swf_upperbound
     ,lwf_upperbound
     #,Fsed_oxy_upperbound
@@ -422,7 +385,7 @@ if(include_wq){
   )
   par_init_qt <<- c(
     zone1temp_init_qt
-    #,zone2temp_init_qt
+    ,zone2temp_init_qt
     ,swf_init_qt
     ,lwf_init_qt
     #,Fsed_oxy_init_qt
@@ -436,20 +399,20 @@ if(include_wq){
   )
   par_units <<- c(
     "deg_C"
-    #,"deg_C"
+    ,"deg_C"
     ,"-"
     ,"-"
     #,"-"
     #,"-"
-    #,"-" 
-    #,"-" 
-    #,"-" 
     #,"-"
-    #,"-" 
+    #,"-"
+    #,"-"
+    #,"-"
+    #,"-"
     #,"-"
   )
-  
-  
+
+
 }else{
   par_names <<- c() #c("sed_temp_mean","sed_temp_mean")
   par_names_save <<- c() #c("zone1temp","zone2temp")
@@ -461,18 +424,109 @@ if(include_wq){
   par_upperbound <<- c() #c(zone1_temp_upperbound,zone2_temp_upperbound)
   par_init_qt <<- c() #c(zone1temp_init_qt,zone2temp_init_qt)
   par_units <<- c() #("deg_C","deg_C") #
-  
-  par_names <<- c("sed_temp_mean","sed_temp_mean","sw_factor","lw_factor")
-  par_names_save <<- c("zone1temp","zone2temp","sw_factor","lw_factor")
-  par_nml <<- c("glm3.nml","glm3.nml","glm3.nml","glm3.nml")
-  par_init_mean <<- c(zone1_temp_init_mean,zone2_temp_init_mean,swf_init_mean, lwf_init_mean)
-  par_init_lowerbound <<- c(zone1_temp_init_lowerbound,zone2_temp_init_lowerbound,swf_init_lowerbound, lwf_init_lowerbound)
-  par_init_upperbound <<- c(zone1_temp_init_upperbound,zone2_temp_init_upperbound,swf_init_upperbound, lwf_init_upperbound)
-  par_lowerbound <<- c(zone1_temp_lowerbound,zone2_temp_lowerbound,swf_lowerbound, lwf_lowerbound)
-  par_upperbound <<- c(zone1_temp_upperbound,zone2_temp_upperbound,swf_upperbound, lwf_upperbound)
-  par_init_qt <<- c(zone1temp_init_qt,zone2temp_init_qt,swf_init_qt, lwf_init_qt)
-  par_units <<- c("deg_C","deg_C","-","-") #
-  
+
+  par_names <<- c("sed_temp_mean"
+                  ,"sed_temp_mean"
+                  ,"sw_factor"
+                  ,"lw_factor"
+                  ,"inflow_factor"
+                  )
+  par_names_save <<- c("zone1temp"
+                       ,"zone2temp"
+                       ,"sw_factor"
+                       ,"lw_factor"
+                       ,"inflow_factor"
+                       )
+  par_nml <<- c("glm3.nml"
+                ,"glm3.nml"
+                ,"glm3.nml"
+                ,"glm3.nml"
+                ,"glm3.nml"
+                )
+  par_init_mean <<- c(zone1_temp_init_mean
+                      ,zone2_temp_init_mean
+                      ,swf_init_mean
+                      ,lwf_init_mean
+                      ,inflow_factor_init_mean
+                      )
+  par_init_lowerbound <<- c(zone1_temp_init_lowerbound
+                            ,zone2_temp_init_lowerbound
+                            ,swf_init_lowerbound
+                            ,lwf_init_lowerbound
+                            ,inflow_factor_init_lowerbound
+                            )
+  par_init_upperbound <<- c(zone1_temp_init_upperbound
+                            ,zone2_temp_init_upperbound
+                            ,swf_init_upperbound
+                            , lwf_init_upperbound
+                            ,inflow_factor_init_upperbound
+                            )
+  par_lowerbound <<- c(zone1_temp_lowerbound
+                       ,zone2_temp_lowerbound
+                       ,swf_lowerbound
+                       , lwf_lowerbound
+                       ,inflow_factor_lowerbound
+                       )
+  par_upperbound <<- c(zone1_temp_upperbound
+                       ,zone2_temp_upperbound
+                       ,swf_upperbound
+                       , lwf_upperbound
+                       ,inflow_factor_upperbound
+                       )
+  par_init_qt <<- c(zone1temp_init_qt
+                    ,zone2temp_init_qt
+                    ,swf_init_qt
+                    , lwf_init_qt
+                    ,inflow_factor_init_qt
+                    )
+  par_units <<- c("deg_C"
+                  ,"deg_C"
+                  ,"-"
+                  ,"-"
+                  ,"-"
+                  ) #
+
+  par_names <<- c("sw_factor"
+                  ,"lw_factor"
+                  #,"inflow_factor"
+  )
+  par_names_save <<- c("sw_factor"
+                       ,"lw_factor"
+                       #,"inflow_factor"
+  )
+  par_nml <<- c("glm3.nml"
+                ,"glm3.nml"
+                #,"glm3.nml"
+  )
+  par_init_mean <<- c(swf_init_mean
+                      ,lwf_init_mean
+                      #,inflow_factor_init_mean
+  )
+  par_init_lowerbound <<- c(swf_init_lowerbound
+                            ,lwf_init_lowerbound
+                            #,inflow_factor_init_lowerbound
+  )
+  par_init_upperbound <<- c(swf_init_upperbound
+                            , lwf_init_upperbound
+                            #,inflow_factor_init_upperbound
+  )
+  par_lowerbound <<- c(swf_lowerbound
+                       , lwf_lowerbound
+                       #,inflow_factor_lowerbound
+  )
+  par_upperbound <<- c(swf_upperbound
+                       , lwf_upperbound
+                       #,inflow_factor_upperbound
+  )
+  par_init_qt <<- c(swf_init_qt
+                    , lwf_init_qt
+                    #,inflow_factor_init_qt
+  )
+  par_units <<- c("-"
+                  ,"-"
+                  #,"-"
+  ) #
+
   #par_init_qt <- par_init_qt * 0.1
 }
 
@@ -480,7 +534,6 @@ if(include_wq){
 #####################################
 ###  Observation information
 ######################################
-
 
 use_ctd <<- FALSE
 ctd_fname <<- paste0(data_location,"/manual-data/CTD_Meta_13_18_final.csv")
@@ -506,8 +559,16 @@ temp_obs_fname <<- c(paste0(data_location,"/mia-data/Catwalk.csv"),paste0(data_l
 met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"),paste0(data_location, "/manual-data/Met_final_2015_2018.csv"))
 #met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"))
 #Name of meteorology file name
+#2013 - dec 2018
 
-inflow_file1 <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
+inflow_file1 <<- c(paste0(data_location,"/diana-data/FCRweir.csv"),
+                   paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv"),
+                   paste0(data_location,"/manual-data/inflow_working_2019.csv"))
+
+chemistry_file <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
+
+
+#inflow_file1 <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
 outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_newEDI_SUMMED_WeirWetland_2013_2018_20190912.csv")
 
 include_wetland_inflow <<- FALSE
@@ -542,7 +603,7 @@ wq_names <<- c("OXY_oxy",
                "PHS_frp_ads",
                "PHY_TCHLA")
 
-#Default initial states if lacking observations 
+#Default initial states if lacking observations
 init_donc <<- 0.1/47.4
 init_dopc <<- 0.1/47.4
 init_ponc <<- (0.1/78.5)
@@ -620,7 +681,7 @@ obs_error_wq_slope <<- c(0, #OXY_oxy #0.25
                          NA, #NCS_ss1
                          NA, #PHS_frp_ads
                          0) #PHY_TCHLA
-                         
+
 
 
 ctd_2_exo_chla <- c(-0.35, 1.9)
@@ -683,10 +744,10 @@ push_to_git <<- TRUE
 # Depths (meters) that the water quality variables are plotted
 focal_depths_wq <<- c(2,5,9)
 #Depths that are plotted for the manager plot
-focal_depths_manager <<- c(4,16,25) #c(4,16,25)
+focal_depths_manager <<- c(3,11,17) #c(2, 4, 9) #c(4,16,25) #c(4,16,25)
 #Indexes for the depths that are compared to calculate turnover
-turnover_index_1 <<- 4
-turnover_index_2 <<- 25
+turnover_index_1 <<- 3 #1 #4
+turnover_index_2 <<- 17 #8 #25
 
 ####################################
 # Extra options that you will not adjust
