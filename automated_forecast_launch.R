@@ -25,9 +25,8 @@ source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
 source(paste0(code_folder, "/", "Rscripts/visualization_analysis/plot_forecast.R"))
 source(paste0(code_folder, "/", "Rscripts/visualization_analysis/combined_oxygen_plot.R"))
 
-start_day_local <- "2020-03-09" #"2019-09-20" 
+start_day_local <- "2019-09-20" 
 restart_file <- NA
-restart_file <- "/Users/quinn/Dropbox (VTFRS)/Research/SSC_forecasting/test_forecast_launch_aed/testing_sim_H_2019_09_20_2020_03_09_F_0_3122020_8_29.nc"
 
 sim_name <- "testing_sim"
 start_time_local <- "07:00:00"
