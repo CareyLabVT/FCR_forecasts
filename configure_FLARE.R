@@ -35,7 +35,7 @@ forecast_SSS_flow <<- 1000
 #m3/day rate of flow if SSS turned on in forecast
 forecast_SSS_Oxy <<- 500
 #umol/m3  of oxygen if SSS turned on in forecast
-sss_fname <<- paste0(data_location,"/manual-data/FCR_SSS_inflow_2013_2019.csv")
+sss_fname <<- paste0(data_location,"/manual-data/FCR_SSS_inflow_2013_2020.csv")
 
 
 
@@ -687,12 +687,12 @@ push_to_git <<- TRUE
 
 # Options for printing function
 # Depths (meters) that the water quality variables are plotted
-focal_depths_wq <<- c(2,5,9)
+focal_depths_wq <<- c(1,5,9)
 #Depths that are plotted for the manager plot
-focal_depths_manager <<- c(3,11,17) #c(2, 4, 9) #c(4,16,25) #c(4,16,25)
+focal_depths_manager <<- c(1,5,8) #c(2, 4, 9) #c(4,16,25) #c(4,16,25)
 #Indexes for the depths that are compared to calculate turnover
-turnover_index_1 <<- 3 #1 #4
-turnover_index_2 <<- 17 #8 #25
+turnover_index_1 <<- 1 #1 #4
+turnover_index_2 <<- 8 #8 #25
 
 ####################################
 # Extra options that you will not adjust
