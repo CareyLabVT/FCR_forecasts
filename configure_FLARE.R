@@ -118,8 +118,8 @@ default_blue_ice_thickness_init <<- 0.0
 ##  Ensemble members used
 ##############################
 n_enkf_members <<- 1
-n_ds_members <<- 5
-n_inflow_outflow_members <<- 1
+n_ds_members <<- 21
+n_inflow_outflow_members <<- 21
 #Note: this number is multiplied by
 # 1) the number of NOAA ensembles (21)
 # 2) the number of downscaling essembles (50 is current)
@@ -485,16 +485,6 @@ ctd_fname <<- paste0(data_location,"/manual-data/CTD_Meta_13_18_final.csv")
 #Use CTD data in place of the sensor string
 use_nutrient_data <<- FALSE
 nutrients_fname <<- paste0(data_location,"/manual-data/chemistry.csv")
-#Use EDI formated nutrient file
-
-observed_depths_temp <<- c(0.1, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-#Depths with temperature observations
-
-observed_depths_do <<- c(1, 5, 9)
-#Depths with do observations
-
-observed_depths_chla_fdom <<- 1
-#Depths with Chla and fdom observations
 
 temp_obs_fname <<- c(paste0(data_location,"/mia-data/Catwalk.csv"),paste0(data_location, "/manual-data/Catwalk_cleanedEDI.csv"))
 #temp_obs_fname <<- paste0(data_location,"/mia-data/Catwalk.csv")
