@@ -38,7 +38,7 @@ restart_file <- NA
 
 sim_name <- "testing_sim"
 start_time_local <- "07:00:00"
-forecast_start_day_local <- "2019-09-25" #"2020-03-09" 
+forecast_start_day_local <- "2020-03-09" 
 spin_up_days <- 0
 days_between_forecasts <- 1
 forecast_days <- 16
