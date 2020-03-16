@@ -528,19 +528,13 @@ met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"),paste0(data_
 #2013 - dec 2018
 
 inflow_file1 <<- c(paste0(data_location,"/diana-data/FCRweir.csv"),
-                   paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv"),
-                   paste0(data_location,"/manual-data/inflow_working_2019.csv"))
-
-chemistry_file <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
-
+                   paste0(data_location,"/manual-data/inflow_for_EDI_2013_06Mar2020.csv"))
 
 #inflow_file1 <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
 outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_newEDI_SUMMED_WeirWetland_2013_2018_20190912.csv")
 
 include_wetland_inflow <<- FALSE
 inflow_file2 <<- paste0(data_location,"/manual-data/FCR_wetland_inflow_newEDI_2013_2018_20190912_oneDOC.csv")
-#Name of the historical inflow and outflow files
-
 
 #########################################
 ###  Water quality state information
