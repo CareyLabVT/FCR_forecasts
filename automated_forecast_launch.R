@@ -5,6 +5,7 @@ if (!"RCurl" %in% installed.packages()) install.packages("RCurl")
 if (!"testit" %in% installed.packages()) install.packages("testit")
 if (!"imputeTS" %in% installed.packages()) install.packages("imputeTS")
 if (!"tidyverse" %in% installed.packages()) install.packages("tidyverse")
+if (!"rMR" %in% installed.packages()) install.packages("rMR")
 
 library(mvtnorm)
 library(ncdf4)
@@ -14,6 +15,7 @@ library(testit)
 library(imputeTS)
 library(tidyverse)
 library(tools)
+library(rMR)
 
 data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
 code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
@@ -28,7 +30,7 @@ source(paste0(code_folder, "/", "Rscripts/visualization_analysis/combined_oxygen
 start_day_local <- "2019-09-20" 
 restart_file <- NA
 
-sim_name <- "testing_sim"
+sim_name <- "v2.glm_aed_oxy"
 start_time_local <- "07:00:00"
 forecast_start_day_local <- "2020-03-10" 
 spin_up_days <- 0

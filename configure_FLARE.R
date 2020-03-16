@@ -116,8 +116,8 @@ default_blue_ice_thickness_init <<- 0.0
 ##  Ensemble members used
 ##############################
 n_enkf_members <<- 1
-n_ds_members <<- 5 
-n_inflow_outflow_members <<- 1
+n_ds_members <<- 21 
+n_inflow_outflow_members <<- 21
 #Note: this number is multiplied by 
 # 1) the number of NOAA ensembles (21)
 # 2) the number of downscaling essembles (50 is current)
@@ -280,8 +280,7 @@ if(include_wq){
     "sed_temp_mean"
     ,"sed_temp_mean"
     ,"sw_factor"
-    #,"lw_factor"
-    #,"inflow_factor"
+    ,"lw_factor"
     #,"Fsed_oxy"
     #,"pd%R_growth"
     #,"Rnitrif"
@@ -295,8 +294,7 @@ if(include_wq){
     "zone1temp"
     ,"zone2temp"
     ,"sw_factor"
-    #,"lw_factor"
-    #,"inflow_factor"
+    ,"lw_factor"
     #,"Fsed_oxy"
     #,"R_growth"
     #,"Rnitrif"
@@ -310,8 +308,7 @@ if(include_wq){
     "glm3.nml"
     ,"glm3.nml"
     ,"glm3.nml"
-    #,"glm3.nml"
-    #,"glm3.nml"
+    ,"glm3.nml"
     #,"aed2.nml"
     #,"aed2_phyto_pars.nml"
     #,"aed2.nml"
@@ -320,13 +317,12 @@ if(include_wq){
     #, "aed2.nml"
     #, "aed2.nml"
     #, "aed2.nml"
-  ) 
+  )
   par_init_mean <<- c(
     zone1_temp_init_mean
     ,zone2_temp_init_mean
     ,swf_init_mean
-    #,lwf_init_mean
-    #,inflow_factor_init_mean
+    ,lwf_init_mean
     #,Fsed_oxy_init_mean
     #,R_growth_init_mean
     #,Rnitrif_init_mean
@@ -340,8 +336,7 @@ if(include_wq){
     zone1_temp_init_lowerbound
     ,zone2_temp_init_lowerbound
     ,swf_init_lowerbound
-    #,lwf_init_lowerbound
-    #,inflow_factor_init_lowerbound
+    ,lwf_init_lowerbound
     #,Fsed_oxy_init_lowerbound
     #,R_growth_init_lowerbound
     #,Rnitrif_init_lowerbound
@@ -355,11 +350,10 @@ if(include_wq){
     zone1_temp_init_upperbound
     ,zone2_temp_init_upperbound
     ,swf_init_upperbound
-    #,lwf_init_upperbound
-    #,inflow_factor_init_upperbound
+    ,lwf_init_upperbound
     #,Fsed_oxy_init_upperbound
     #,R_growth_init_upperbound
-    #,Rnitrif_init_upperbound 
+    #,Rnitrif_init_upperbound
     #,Fsed_frp_init_upperbound
     #,Rdom_minerl_init_upperbound
     #,Fsed_nit_init_upperbound
@@ -368,25 +362,23 @@ if(include_wq){
   )
   par_lowerbound <<- c(
     zone1_temp_lowerbound
-    ,zone2_temp_lowerbound 
+    ,zone2_temp_lowerbound
     ,swf_lowerbound
-    #,lwf_lowerbound
-    #,inflow_factor_lowerbound
+    ,lwf_lowerbound
     #,Fsed_oxy_lowerbound
     #,R_growth_lowerbound
     #,Rnitrif_lowerbound
     #,Fsed_frp_lowerbound
     #,Rdom_minerl_lowerbound
-    #,Fsed_nit_lowerbound 
-    #,Fsed_amm_lowerbound 
+    #,Fsed_nit_lowerbound
+    #,Fsed_amm_lowerbound
     #,Fsed_doc_lowerbound
   )
   par_upperbound <<- c(
     zone1_temp_upperbound
     ,zone2_temp_upperbound
     ,swf_upperbound
-    #,lwf_upperbound
-    #,inflow_factor_upperbound
+    ,lwf_upperbound
     #,Fsed_oxy_upperbound
     #,R_growth_upperbound
     #,Rnitrif_upperbound
@@ -400,8 +392,7 @@ if(include_wq){
     zone1temp_init_qt
     ,zone2temp_init_qt
     ,swf_init_qt
-    #,lwf_init_qt
-    #,inflow_factor_init_qt
+    ,lwf_init_qt
     #,Fsed_oxy_init_qt
     #,R_growth_init_qt
     #,Rnitrif_init_qt
@@ -415,19 +406,16 @@ if(include_wq){
     "deg_C"
     ,"deg_C"
     ,"-"
+    ,"-"
     #,"-"
     #,"-"
     #,"-"
     #,"-"
-    #,"-" 
-    #,"-" 
-    #,"-" 
     #,"-"
-    #,"-" 
+    #,"-"
+    #,"-"
     #,"-"
   )
-  
-  
 }else{
   par_names <<- c() #c("sed_temp_mean","sed_temp_mean")
   par_names_save <<- c() #c("zone1temp","zone2temp")
