@@ -17,10 +17,15 @@ library(tidyverse)
 library(tools)
 library(rMR)
 
-data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
-code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
-forecast_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/test_forecast_launch/"
-execute_location <<- "/Volumes/ramdisk1/"
+#data_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/SCC_data/"
+#code_folder <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/FLARE/"
+#forecast_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/test_forecast_launch/"
+#execute_location <<- "/Volumes/ramdisk1/"
+
+data_location <<- "/data/SCCData"
+code_folder <<- "~/applications/forecast/FLARE"
+forecast_location <<- "~/applications/forecast/FCR_forecasts/v2.glm"
+execute_location <<- "/data/forecast_exec"
 
 source(paste0(forecast_location,"/","configure_FLARE.R"))
 source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
@@ -33,7 +38,7 @@ restart_file <- NA
 
 sim_name <- "testing_sim"
 start_time_local <- "07:00:00"
-forecast_start_day_local <- "2020-03-09" 
+forecast_start_day_local <- "2019-09-25" #"2020-03-09" 
 spin_up_days <- 0
 days_between_forecasts <- 1
 forecast_days <- 16
