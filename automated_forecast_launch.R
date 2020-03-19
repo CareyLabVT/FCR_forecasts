@@ -24,8 +24,8 @@ library(rMR)
 
 data_location <<- "/data/SCCData"
 code_folder <<- "~/applications/forecast/FLARE"
-forecast_location <<- "~/applications/forecast/FCR_forecasts/v2.glm"
-execute_location <<- "/data/forecast_exec"
+forecast_location <<- "~/applications/forecast/FCR_forecasts/v2.glm_aed"
+execute_location <<- "/data/forecast_exec_aed"
 
 source(paste0(forecast_location,"/","configure_FLARE.R"))
 source(paste0(code_folder, "/", "Rscripts/run_flare.R"))
