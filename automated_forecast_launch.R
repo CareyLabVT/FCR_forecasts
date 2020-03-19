@@ -47,7 +47,7 @@ wait_time <- 60*60
 start_day_local <- as_date(start_day_local)
 forecast_start_day_local <- as_date(forecast_start_day_local)
 
-if(is.na(restart_file)){
+if(!file.exists(paste0(forecast_location,"/last_success.Rdata"))){
   
   hist_days <- as.numeric(difftime(as_date(forecast_start_day_local),as_date(start_day_local)))
   
@@ -97,12 +97,16 @@ if(is.na(restart_file)){
   #ADVANCE TO NEXT DAY
   start_day_local <- as_date(start_day_local) + days(hist_days)
   restart_file <- unlist(out)[1]
+  save(restart_file,start_day_local,file = paste0(forecast_location,"/last_success.Rdata"))
 }
 
 forecast_day_count <- 1
 #ALL SUBSEQUENT DAYS
 if(num_forecast_periods > 0){
   repeat{
+    
+    load(paste0(forecast_location,"/last_success.Rdata"))
+    
     
     startTime <- Sys.time()
     if(forecast_day_count == 1){
@@ -121,7 +125,7 @@ if(num_forecast_periods > 0){
                                              tz = local_tzone) + days(hist_days)
         
         forecast_start_time_GMT <- with_tz(forecast_start_time_local, 
-                                          tzone = "GMT")
+                                           tzone = "GMT")
         
         if(day(forecast_start_time_GMT) < 10){
           forecast_day <- paste0('0',day(forecast_start_time_GMT))
@@ -168,7 +172,10 @@ if(num_forecast_periods > 0){
     
     spin_up_days <- 0
     
+    
     if(forecast_no_SSS){
+      
+      
       
       out1 <- run_flare(start_day_local,
                         start_time_local,
@@ -265,9 +272,17 @@ if(num_forecast_periods > 0){
     
     restart_file <- unlist(out1)[1]
     
+
+    
     #ADVANCE TO NEXT DAY
     start_day_local <- start_day_local + days(hist_days)
     forecast_day_count <- forecast_day_count + 1
+    
+    save(restart_file, 
+         start_day_local, 
+         forecast_day_count, 
+         file = paste0(forecast_location,"/last_success.Rdata"))
+    
     if(!is.na(num_forecast_periods)){
       if(forecast_day_count > num_forecast_periods){
         break
