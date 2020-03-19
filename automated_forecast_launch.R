@@ -272,11 +272,17 @@ if(num_forecast_periods > 0){
     
     restart_file <- unlist(out1)[1]
     
-    save(restart_file,start_day_local,file = paste0(forecast_location,"/last_success.Rdata"))
+    
     
     #ADVANCE TO NEXT DAY
     start_day_local <- start_day_local + days(hist_days)
     forecast_day_count <- forecast_day_count + 1
+    
+    save(restart_file, 
+         start_day_local, 
+         forecast_day_count, 
+         file = paste0(forecast_location,"/last_success.Rdata"))
+    
     if(!is.na(num_forecast_periods)){
       if(forecast_day_count > num_forecast_periods){
         break
