@@ -69,8 +69,8 @@ use_future_inflow <<- TRUE
 # Run information
 #############################
 
-GLMversion <<- "GLM 3.0.0beta10"
-FLAREversion <<- "v1.0_beta.1"
+GLMversion <<- "3.1.0a4"
+FLAREversion <<- "v1.0_beta2.0"
 #GLM and FLARE version; the code adds these to the output files
 
 base_GLM_nml <- paste0(forecast_location,"/glm3_woAED.nml" )
@@ -133,7 +133,7 @@ qt_beta <<- 0.7 #
 localization_distance <<- 1 #distance in meters were covariances in the process error are used
 use_cov <<- TRUE
 adapt_qt_method <<- 1  #0 = no adapt, 1 = variance in residuals, 2 = Rastetter et al 2011
-num_adapt_days <<- 15
+num_adapt_days <<- 30
 
 #################################
 # Parameter calibration information
@@ -187,232 +187,6 @@ inflow_factor_upperbound <<- 1.0
 #daily perturbance of parameter value
 inflow_factor_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
 
-#Fsed_oxy
-Fsed_oxy_init_mean <<- -20
-Fsed_oxy_init_lowerbound <<-  -100 #-30 #-24.220
-Fsed_oxy_init_upperbound <<-  -5 #10 #-24.218
-Fsed_oxy_lowerbound <<-  -1000 #-30 #-24.220
-Fsed_oxy_upperbound <<-  1000 #10 #-24.218
-#daily perturbance of parameter value
-Fsed_oxy_init_qt <<- 1^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Rdom_minerl
-Rdom_minerl_init_mean <<- 0.001
-Rdom_minerl_init_lowerbound <<-  0.0005 #0.00049
-Rdom_minerl_init_upperbound <<-  0.005 #0.00051
-Rdom_minerl_lowerbound <<-  -1 #0.0000 #0.00049
-Rdom_minerl_upperbound <<-  1 #0.00051
-#daily perturbance of parameter value
-Rdom_minerl_init_qt <<- 0.0001^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#R_growth
-R_growth_init_mean <<-  1.0
-R_growth_init_lowerbound <<-  0.5 #0.99
-R_growth_init_upperbound <<-  1.5 #1.01
-R_growth_lowerbound <<-  -10.00 #0.99
-R_growth_upperbound <<-  10.00 #1.01
-#daily perturbance of parameter value
-R_growth_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Rnitrif
-Rnitrif_init_mean <<- 0.02
-Rnitrif_init_lowerbound <<-  0.001 #0.99
-Rnitrif_init_upperbound <<-  0.1 #1.01
-Rnitrif_lowerbound <<-  -1 #0.99
-Rnitrif_upperbound <<-  1 #1.01
-#daily perturbance of parameter value
-Rnitrif_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#w_p
-w_p_init_mean <<- 0.0
-w_p_init_lowerbound <<-  -0.1 #0.99
-w_p_init_upperbound <<-  0.1 #1.01
-w_p_lowerbound <<-  -0.1 #0.99
-w_p_upperbound <<-  0.1 #1.01
-#daily perturbance of parameter value
-w_p_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Fsed_frp
-Fsed_frp_init_mean <<- 0.11
-Fsed_frp_init_lowerbound <<-  0.01 #0.99
-Fsed_frp_init_upperbound <<-  0.2 #1.01
-Fsed_frp_lowerbound <<-  -1000 #0.99
-Fsed_frp_upperbound <<-  1000 #1.01
-#daily perturbance of parameter value
-Fsed_frp_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Fsed_amm
-Fsed_amm_init_mean <<- 5
-Fsed_amm_init_lowerbound <<-  2 #0.99
-Fsed_amm_init_upperbound <<-  8 #1.01
-Fsed_amm_lowerbound <<-  -1000 #0.99
-Fsed_amm_upperbound <<-  1000 #1.01
-#daily perturbance of parameter value
-Fsed_amm_init_qt <<- 0.01^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Fsed_nit
-Fsed_nit_init_mean <<- -10
-Fsed_nit_init_lowerbound <<-  -10 #0.99
-Fsed_nit_init_upperbound <<-  0.0 #1.01
-Fsed_nit_lowerbound <<-  -100 #0.99
-Fsed_nit_upperbound <<-  100 #1.01
-#daily perturbance of parameter value
-Fsed_nit_init_qt <<- 0.1^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Fsed_doc
-Fsed_doc_init_mean <<- 50
-Fsed_doc_init_lowerbound <<-  10 #0.99
-Fsed_doc_init_upperbound <<-  60 #1.01
-Fsed_doc_lowerbound <<-  -1000 #0.99
-Fsed_doc_upperbound <<-  1000 #1.01
-#daily perturbance of parameter value
-Fsed_doc_init_qt <<- 0.1^2 #THIS IS THE VARIANCE, NOT THE SD
-
-#Create parameter vectors
-if(include_wq){
-  par_names <<- c(
-    "sed_temp_mean"
-    ,"sed_temp_mean"
-    ,"sw_factor"
-    ,"lw_factor"
-    #,"Fsed_oxy"
-    #,"pd%R_growth"
-    #,"Rnitrif"
-    #,"Fsed_frp"
-    #,"Rdom_minerl"
-    #,"Fsed_nit"
-    #,"Fsed_amm"
-    #, "Fsed_doc"
-  )
-  par_names_save <<- c(
-    "zone1temp"
-    ,"zone2temp"
-    ,"sw_factor"
-    ,"lw_factor"
-    #,"Fsed_oxy"
-    #,"R_growth"
-    #,"Rnitrif"
-    #,"Fsed_frp"
-    #,"Rdom_minerl"
-    #,"Fsed_nit"
-    #,"Fsed_amm"
-    #,"Fsed_doc"
-  )
-  par_nml <<- c(
-    "glm3.nml"
-    ,"glm3.nml"
-    ,"glm3.nml"
-    ,"glm3.nml"
-    #,"aed2.nml"
-    #,"aed2_phyto_pars.nml"
-    #,"aed2.nml"
-    #,"aed2.nml"
-    #, "aed2.nml"
-    #, "aed2.nml"
-    #, "aed2.nml"
-    #, "aed2.nml"
-  )
-  par_init_mean <<- c(
-    zone1_temp_init_mean
-    ,zone2_temp_init_mean
-    ,swf_init_mean
-    ,lwf_init_mean
-    #,Fsed_oxy_init_mean
-    #,R_growth_init_mean
-    #,Rnitrif_init_mean
-    #,Fsed_frp_init_mean
-    #,Rdom_minerl_init_mean
-    #,Fsed_nit_init_mean
-    #,Fsed_amm_init_mean
-    #,Fsed_doc_init_mean
-  )
-  par_init_lowerbound <<- c(
-    zone1_temp_init_lowerbound
-    ,zone2_temp_init_lowerbound
-    ,swf_init_lowerbound
-    ,lwf_init_lowerbound
-    #,Fsed_oxy_init_lowerbound
-    #,R_growth_init_lowerbound
-    #,Rnitrif_init_lowerbound
-    #,Fsed_frp_init_lowerbound
-    #,Rdom_minerl_init_lowerbound
-    #,Fsed_nit_init_lowerbound
-    #,Fsed_amm_init_lowerbound
-    #,Fsed_doc_init_lowerbound
-  )
-  par_init_upperbound <<- c(
-    zone1_temp_init_upperbound
-    ,zone2_temp_init_upperbound
-    ,swf_init_upperbound
-    ,lwf_init_upperbound
-    #,Fsed_oxy_init_upperbound
-    #,R_growth_init_upperbound
-    #,Rnitrif_init_upperbound
-    #,Fsed_frp_init_upperbound
-    #,Rdom_minerl_init_upperbound
-    #,Fsed_nit_init_upperbound
-    #,Fsed_amm_init_upperbound
-    #,Fsed_doc_init_upperbound
-  )
-  par_lowerbound <<- c(
-    zone1_temp_lowerbound
-    ,zone2_temp_lowerbound
-    ,swf_lowerbound
-    ,lwf_lowerbound
-    #,Fsed_oxy_lowerbound
-    #,R_growth_lowerbound
-    #,Rnitrif_lowerbound
-    #,Fsed_frp_lowerbound
-    #,Rdom_minerl_lowerbound
-    #,Fsed_nit_lowerbound
-    #,Fsed_amm_lowerbound
-    #,Fsed_doc_lowerbound
-  )
-  par_upperbound <<- c(
-    zone1_temp_upperbound
-    ,zone2_temp_upperbound
-    ,swf_upperbound
-    ,lwf_upperbound
-    #,Fsed_oxy_upperbound
-    #,R_growth_upperbound
-    #,Rnitrif_upperbound
-    #,Fsed_frp_upperbound
-    #,Rdom_minerl_upperbound
-    #,Fsed_nit_upperbound
-    #,Fsed_amm_upperbound
-    #,Fsed_doc_upperbound
-  )
-  par_init_qt <<- c(
-    zone1temp_init_qt
-    ,zone2temp_init_qt
-    ,swf_init_qt
-    ,lwf_init_qt
-    #,Fsed_oxy_init_qt
-    #,R_growth_init_qt
-    #,Rnitrif_init_qt
-    #,Fsed_frp_init_qt
-    #,Rdom_minerl_init_qt
-    #,Fsed_nit_init_qt
-    #,Fsed_amm_init_qt
-    #,Fsed_doc_init_qt
-  )
-  par_units <<- c(
-    "deg_C"
-    ,"deg_C"
-    ,"-"
-    ,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-    #,"-"
-  )
-
-
-}else{
   par_names <<- c("sed_temp_mean"
                   ,"sed_temp_mean"
                   ,"sw_factor"
@@ -473,8 +247,6 @@ if(include_wq){
                   ,"-"
                   #,"-"
                   ) #
-}
-
 
 #####################################
 ###  Observation information
