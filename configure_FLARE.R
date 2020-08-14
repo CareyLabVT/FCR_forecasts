@@ -275,7 +275,7 @@ inflow_file1 <<- c(paste0(data_location,"/diana-data/FCRweir.csv"),
 outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_newEDI_SUMMED_WeirWetland_2013_2018_20190912.csv")
 
 include_wetland_inflow <<- FALSE
-inflow_file2 <<- paste0(data_location,"/manual-data/FCR_wetland_inflow_newEDI_2013_2018_20190912_oneDOC.csv")
+inflow_file2 <<- paste0(data_location,"/manual-data/FCR_wetland_inflow_2013_2019_20200713_allfractions_2DOCpools.csv")
 
 #########################################
 ###  Water quality state information
