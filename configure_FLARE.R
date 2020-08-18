@@ -272,7 +272,7 @@ inflow_file1 <<- c(paste0(data_location,"/diana-data/FCRweir.csv"),
                    paste0(data_location,"/manual-data/inflow_for_EDI_2013_06Mar2020.csv"))
 
 #inflow_file1 <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
-outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_newEDI_SUMMED_WeirWetland_2013_2018_20190912.csv")
+outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_SUMMED_WeirWetland_2013_2019_20200615.csv")
 
 include_wetland_inflow <<- FALSE
 inflow_file2 <<- paste0(data_location,"/manual-data/FCR_wetland_inflow_2013_2019_20200713_allfractions_2DOCpools.csv")
