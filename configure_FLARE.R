@@ -35,7 +35,7 @@ forecast_SSS_flow <<- 1000
 #m3/day rate of flow if SSS turned on in forecast
 forecast_SSS_Oxy <<- 500
 #umol/m3  of oxygen if SSS turned on in forecast
-sss_fname <<- paste0(data_location,"/manual-data/FCR_SSS_inflow_2013_2020.csv")
+sss_fname <<- paste0(data_location,"/fcre-manual-downloads/FCR_SSS_inflow_2013_2020.csv")
 
 
 
@@ -52,7 +52,7 @@ DOWNSCALE_MET <<- TRUE
 
 noaa_location <<- paste0(data_location, "/",lake_name,"/")
 
-downscaling_coeff <<- paste0(data_location, "/manual-data/debiased.coefficients.2018_07_12_2019_07_11.RData")
+downscaling_coeff <<- paste0(data_location, "/fcre-manual-downloads/debiased.coefficients.2018_07_12_2019_07_11.RData")
 
 #file name of previous downscaling coefficients
 #use NA if not using an existing file
@@ -253,29 +253,29 @@ inflow_factor_init_qt <<- 0.001^2 #THIS IS THE VARIANCE, NOT THE SD
 ######################################
 
 use_ctd <<- FALSE
-ctd_fname <<- paste0(data_location,"/manual-data/CTD_Meta_13_18_final.csv")
+ctd_fname <<- paste0(data_location,"/fcre-manual-downloads/CTD_Meta_13_18_final.csv")
 #Use CTD data in place of the sensor string
 use_nutrient_data <<- FALSE
-nutrients_fname <<- paste0(data_location,"/manual-data/chemistry.csv")
+nutrients_fname <<- paste0(data_location,"/fcre-manual-downloads/chemistry.csv")
 
-temp_obs_fname <<- c(paste0(data_location,"/mia-data/Catwalk.csv"),paste0(data_location, "/manual-data/Catwalk_cleanedEDI.csv"))
+temp_obs_fname <<- c(paste0(data_location,"/fcre-catwalk-data/Catwalk.csv"),paste0(data_location, "/fcre-manual-downloads/Catwalk_cleanedEDI.csv"))
 #temp_obs_fname <<- paste0(data_location,"/mia-data/Catwalk.csv")
 #name of catwalk file name
 #Catwalk has the temperature string, fdom, chla, and do sensors
 
-met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"),paste0(data_location, "/manual-data/Met_final_2015_2019.csv"))
+met_obs_fname <<- c(paste0(data_location,"/fcre-metstation-data/FCRmet.csv"),paste0(data_location, "/fcre-manual-downloads/Met_final_2015_2019.csv"))
 #met_obs_fname <<- c(paste0(data_location,"/carina-data/FCRmet.csv"))
 #Name of meteorology file name
 #2013 - dec 2018
 
-inflow_file1 <<- c(paste0(data_location,"/diana-data/FCRweir.csv"),
-                   paste0(data_location,"/manual-data/inflow_for_EDI_2013_06Mar2020.csv"))
+inflow_file1 <<- c(paste0(data_location,"/fcre-weir-data/FCRweir.csv"),
+                   paste0(data_location,"/fcre-manual-downloads/inflow_for_EDI_2013_06Mar2020.csv"))
 
 #inflow_file1 <<- paste0(data_location,"/manual-data/FCR_weir_inflow_newEDI_2013_2018_20190911_oneDOC.csv")
-outflow_file1 <<- paste0(data_location,"/manual-data/FCR_spillway_outflow_SUMMED_WeirWetland_2013_2019_20200615.csv")
+outflow_file1 <<- paste0(data_location,"/fcre-manual-downloads/FCR_spillway_outflow_SUMMED_WeirWetland_2013_2019_20200615.csv")
 
 include_wetland_inflow <<- FALSE
-inflow_file2 <<- paste0(data_location,"/manual-data/FCR_wetland_inflow_2013_2019_20200713_allfractions_2DOCpools.csv")
+inflow_file2 <<- paste0(data_location,"/fcre-manual-downloads/FCR_wetland_inflow_2013_2019_20200713_allfractions_2DOCpools.csv")
 
 #########################################
 ###  Water quality state information

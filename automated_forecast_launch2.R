@@ -22,7 +22,7 @@ library(rMR)
 #forecast_location <<- "/Users/quinn/Dropbox/Research/SSC_forecasting/test_forecast_launch/"
 #execute_location <<- "/Volumes/ramdisk1/"
 
-data_location <<- "/data/FCRE-data"
+data_location <<- "/data/SCCData"
 code_folder <<- "~/applications/forecast/FLARE"
 forecast_location <<- "~/applications/forecast/FCR_forecasts/v2.glm"
 execute_location <<- "/data/forecast_exec"
@@ -290,3 +290,4 @@ if(num_forecast_periods > 0){
     }
   }
 }
+
