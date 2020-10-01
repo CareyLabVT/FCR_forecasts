@@ -1,0 +1,1 @@
+/home/vahid/applications/forecast/forecast-run.sh: line 5: 19503 Killed                  /usr/bin/Rscript ~/applications/forecast/FCR_forecasts/v2.glm/automated_forecast_launch.R > ~/applications/forecast/logs/out.log 2> ~/applications/forecast/logs/error.log

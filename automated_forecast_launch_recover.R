@@ -101,6 +101,7 @@ if(!file.exists(paste0(forecast_location,"/last_success.Rdata"))){
 }
 
 forecast_day_count <- 1
+num_forecast_periods <- 1
 #ALL SUBSEQUENT DAYS
 if(num_forecast_periods > 0){
   repeat{
@@ -114,6 +115,8 @@ if(num_forecast_periods > 0){
     }else{
       hist_days <- days_between_forecasts
     }
+
+    hist_days <- 7
     
     if(use_future_met){
       #LOOP TO KEEP CHECKING FOR A NOAA FORECAST
@@ -163,7 +166,6 @@ if(num_forecast_periods > 0){
         
         if(!file.exists(paste0(noaa_location,'/',forecast_base_name))){
           print('Waiting for NOAA forecast')
-	  print(paste0(noaa_location,'/',forecast_base_name))
           Sys.sleep(wait_time)
         }else{
           forecast_avialable = TRUE
@@ -183,7 +185,7 @@ if(num_forecast_periods > 0){
                         forecast_start_day_local,
                         sim_name = sim_name,
                         hist_days = hist_days,
-                        forecast_days = forecast_days,
+                        forecast_days = 0,
                         spin_up_days = spin_up_days,
                         restart_file = restart_file,
                         code_folder = code_folder,
